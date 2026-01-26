@@ -10,10 +10,10 @@ if(abs(arr[i]-arr[i+1])<mini){
     mini=abs(arr[i]-arr[i+1]);}}
          for(int i=0;i<n-1;i++){
          if(abs(arr[i]-arr[i+1]) == mini){
-vector <int> comp;
-comp.push_back(arr[i]);
-comp.push_back({arr[i+1]});
-res.push_back(comp);
+// vector <int> comp;
+// comp.push_back(arr[i]);
+// comp.push_back({arr[i+1]});
+res.push_back({arr[i],arr[i+1]});
          }
 
          }
