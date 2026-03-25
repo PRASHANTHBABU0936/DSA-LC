@@ -1,34 +1,52 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
-
-        if(head == NULL) return NULL;
-
-        int len = 0;
-        ListNode* t = head;
-        while(t != NULL){
-            len++;
-            t = t->next;
+        ListNode* temp = head;
+        int lent=0;
+        while(temp != NULL){
+            temp=temp->next;
+            lent++;
         }
+        int wngt=lent-n;
+      ListNode* rtemp = head;
+int h=1;
+if(wngt==0){
+    ListNode* first=head;
+    head=head->next;
+    delete(first);
+    return head;
+}
+while(h!=wngt){
+    rtemp=rtemp->next;
+    h++;
+}
 
-        int h = len - n;  
-        if(h == 0){
-            ListNode* del = head;
-            head = head->next;
-            delete(del);
-            return head;
-        }
+// if (rtemp->next != NULL){
 
-        int i = 1;
-        ListNode* temp = head;        while(i < h){
-            temp = temp->next;
-            i++;
-        }
 
-        ListNode* del = temp->next;
-        temp->next = del->next;
-        delete(del);
+// }
 
-        return head;
-    }
+if(rtemp->next != NULL && rtemp->next->next != NULL){ListNode* hell=rtemp->next;
+rtemp->next=rtemp->next->next;
+delete(hell);}
+else {
+    ListNode* hell=rtemp->next;
+    rtemp->next=NULL;
+    delete(hell);
+}
+
+
+
+
+    return head;}
 };
