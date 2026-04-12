@@ -1,27 +1,21 @@
 class Solution {
 public:
     int minimumDistance(vector<int>& nums) {
+
         int n = nums.size();
-        int ans = INT_MAX;
+        int dist=INT_MAX;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                for(int k=0;k<n;k++){
+ if(i != j && j != k && i != k &&
+                       nums[i] == nums[j] && nums[j] == nums[k]) {
 
-        // store indices for each value (1 to n)
-        vector<vector<int>> pos(n + 1);
-
-        for (int i = 0; i < n; i++) {
-            pos[nums[i]].push_back(i);
-        }
-
-        for (int val = 1; val <= n; val++) {
-            if (pos[val].size() >= 3) {
-                vector<int>& v = pos[val];
-
-                for (int i = 0; i + 2 < v.size(); i++) {
-                    int dist = 2 * (v[i + 2] - v[i]);
-                    ans = min(ans, dist);
+                        int d = abs(i - j) + abs(j - k) + abs(k - i);
+                        dist = min(dist, d);
                 }
             }
         }
+        }
+            return dist == INT_MAX ? -1 : dist;}
 
-        return (ans == INT_MAX) ? -1 : ans;
-    }
 };
