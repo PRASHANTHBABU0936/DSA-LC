@@ -1,7 +1,7 @@
 class Solution {
 public:
 
- int hell(int n,int idx1,int idx2,string &s,int i){
+ int hell(int n,int idx1,int idx2,string s,int i){
     int count=0;
 while(i<s.size()){
     if(s[i] == 'R'){
