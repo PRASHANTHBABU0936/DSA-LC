@@ -1,47 +1,37 @@
 class Solution {
 public:
-
-void bfs(int i,int j,vector<vector<char>>& grid,vector<vector<int>>  &vis){
-      int n = grid.size();
-        int m = grid[0].size();
-    vis[i][j]=1;
-queue<pair<int,int>> q;
-q.push({i,j});
-while(!q.empty()){
-    int hell=q.front().first;
-    int hell2=q.front().second;
-    vis[hell][hell2]=1;
-
-    q.pop();
-if((hell-1>=0 && grid[hell-1][hell2] == '1')&&vis[hell-1][hell2] != 1)  {
-    // vis[hell-1][hell2] = 1;
-    q.push({hell-1,hell2});
-}
-    if((hell2-1>=0 && grid[hell][hell2-1] == '1')&&vis[hell][hell2-1] != 1) {
-         vis[hell][hell2-1] = 1;
-         q.push({hell,hell2-1});
-   }
-    if((hell+1<n && grid[hell+1][hell2] == '1')&&vis[hell+1][hell2] != 1)  {vis[hell+1][hell2] = 1;
-        q.push({hell+1,hell2});
-    }
-  if(hell2+1 < m && grid[hell][hell2+1] == '1' && vis[hell][hell2+1] != 1){
-    vis[hell][hell2+1] = 1;
-    q.push({hell,hell2+1});
-}
-}
-}
     int numIslands(vector<vector<char>>& grid) {
         int n = grid.size();
         int m = grid[0].size();
-vector<vector<int>> vis(n,vector<int>(m,0));
-int res=0;
+        int count=0;
+        queue <pair<int,int>> q;
+                vector<vector<int>> vis(n,vector<int>(m,0));
         for(int i=0;i<n;i++){
-for(int j=0;j<m;j++){
-if(grid[i][j] == '1' && vis[i][j] != 1){
-        res++;
-    bfs(i,j,grid,vis);
+            for(int j=0;j<m;j++){
+                if(grid[i][j] == '1' && vis[i][j] == 0){
+count++;
+q.push({i,j});
+
+while(!q.empty()){
+    int hell1=q.front().first;
+    int hell2=q.front().second;
+    q.pop();
+    vis[hell1][hell2]=1;
+    int dx[]={-1,0,1,0};
+    int dy[]={0,1,0,-1};
+for(int i=0;i<4;i++){
+if((hell1+dx[i])<n && (hell1+dx[i]>=0) && (hell2+dy[i]<m) && (hell2+dy[i]>=0)){
+if(grid[hell1+dx[i]][hell2+dy[i]] == '1' && vis[hell1+dx[i]][hell2+dy[i]] == 0){
+q.push({hell1+dx[i],hell2+dy[i]});
+vis[hell1+dx[i]][hell2+dy[i]]=1;
 }
 }
+}
+
+}
+
+                }
+            }
         }
-   return res; }
+  return count;  }
 };
