@@ -1,23 +1,37 @@
 class Solution {
 public:
-vector<vector<int>> dp;
-bool hell(int n,vector<int>& nums,int index,int sum,int curr){
 
-    if(index == n) return curr == sum/2;
-// if(index > n)return false;
-if(curr == (sum/2)) return true;
-  if (dp[index][curr] != -1)
-            return dp[index][curr];
+vector<vector<int>> memo;
 
-        return dp[index][curr]=(hell(n,nums,index+1,sum,curr+nums[index])|| hell(n,nums,index+1,sum,curr));}
+
+int hell(int index,int sum,vector<int> &nums,int n,int carried){
+
+        if (carried == sum)
+            return true;
+
+        if (carried > sum)
+            return false;
+            
+if(index == n) return false;
+if(memo[index][carried] != -1) return memo[index][carried];
+int pres=nums[index];
+if(carried+pres == sum) return true;
+
+return memo[index][carried]=(hell(index+1,sum,nums,n,carried+pres))||(hell(index+1,sum,nums,n,carried));
+}
+
     bool canPartition(vector<int>& nums) {
- int sum=0;
-        int n = nums.size();
-               for(int i=0;i<n;i++){
-            sum+=nums[i]; }
-            if (sum % 2 != 0) return false;
+     int n = nums.size();
+     long long sum=0;
+        for(auto ed:nums){
+            sum+=ed;
+        }
+        // memo.resize(n,vector<int>(n,-1));
+        int target = sum / 2;
+memo.resize(n, vector<int>(target + 1, -1));
 
- int curr=0;
- dp.assign(n,vector<int>(sum+1,-1));
-   return hell(n,nums,0,sum,curr);  }
+        if(sum%2 != 0) return false;
+        return hell(0,sum/2,nums,n,0);
+
+    }
 };
