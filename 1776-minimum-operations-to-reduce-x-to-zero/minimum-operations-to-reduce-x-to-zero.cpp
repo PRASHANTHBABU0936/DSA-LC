@@ -3,51 +3,57 @@ public:
     int minOperations(vector<int>& nums, int x) {
         int n = nums.size();
 
+        // Prefix sum
         vector<int> prefix(n);
         prefix[0] = nums[0];
+
+        // Suffix sum
+        map<int, int> mp;
 
         for (int i = 1; i < n; i++) {
             prefix[i] = prefix[i - 1] + nums[i];
         }
 
-        // suffix sum -> starting index
-        map<int, int> mp;
+        // Store suffix sum -> starting index
+        mp[nums[n - 1]] = n - 1;
 
-        int sum = 0;
+        int sum = nums[n - 1];
 
-        // Empty suffix
-        mp[0] = n;
-
-        for (int i = n - 1; i >= 0; i--) {
+        for (int i = n - 2; i >= 0; i--) {
             sum += nums[i];
             mp[sum] = i;
         }
 
         int mini = INT_MAX;
-        int pre = 0;
 
-        // i = -1 represents an empty prefix
-        for (int i = -1; i < n; i++) {
+        // Case 1: Only suffix
+        if (mp.find(x) != mp.end()) {
+            mini = n - mp[x];
+        }
 
-            if (i >= 0)
-                pre += nums[i];
+        // Case 2: Prefix + suffix
+        for (int i = 0; i < n; i++) {
 
-            int need = x - pre;
+            // Case 3: Only prefix
+            if (prefix[i] == x) {
+                mini = min(mini, i + 1);
+            }
 
-            if (mp.find(need) != mp.end()) {
+            // Prefix + suffix
+            if (mp.find(x - prefix[i]) != mp.end()) {
 
-                int j = mp[need];
+                int j = mp[x - prefix[i]];
 
-                // Prefix and suffix must not overlap
-                if (j >= i + 1) {
-
-                    int operations = (i + 1) + (n - j);
-
-                    mini = min(mini, operations);
+                // Avoid overlapping
+                if (j > i) {
+                    mini = min(mini, (i + 1) + (n - j));
                 }
             }
         }
 
-        return mini == INT_MAX ? -1 : mini;
+        if (mini == INT_MAX)
+            return -1;
+
+        return mini;
     }
 };
