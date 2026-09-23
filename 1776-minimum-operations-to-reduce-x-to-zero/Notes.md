@@ -1,1 +1,1 @@
-<h2>minimum-operations-to-reduce-x-to-zero Notes</h2><hr>[ Time taken: 57m 6s ]
+<h2>minimum-operations-to-reduce-x-to-zero Notes</h2><hr>[ Time taken: 1hr 13m 1s ]
