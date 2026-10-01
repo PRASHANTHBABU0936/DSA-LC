@@ -1,33 +1,22 @@
 class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<vector<string>> res;
         int n = strs.size();
-          vector<vector<string>> res;
-          vector<string> hell=strs;
-        //   if(n == 1) return strs;
-        //   if (strs == strs.empty()) return "";/
-        // if (n == 1) return strs[0];
-        if (strs.empty()) return {};
+        map<string,vector<int>> mp;
+        for(int i=0;i<n;i++){
+            string hell=strs[i];
+          sort(hell.begin(),hell.end());
+            mp[hell].push_back(i);
+        }
 
-          for(int i=0;i<n;i++){
-sort(hell[i].begin(),hell[i].end());
-          }
-unordered_map <string,vector<int>> mp;
+        for(auto it:mp){
+        vector<string> temp;
+        for(auto nn:it.second){
+            temp.push_back(strs[nn]);
+        }
+res.push_back(temp);
 
-for(int k=0;k<hell.size();k++){
-    // if(mp.find(hell[k]) == mp.end()){
-mp[hell[k]].push_back(k);
-    // }
-}
-
-
-for(auto ed:mp){
-    vector<int> hell=ed.second;
-    vector<string> pushs;
-    for(int l=0;l<hell.size();l++){
-pushs.push_back(strs[hell[l]]);
-    }
-    res.push_back(pushs);
-}
-    return res;}
+            }    
+            return res;}
 };
